@@ -1,6 +1,6 @@
 \documentclass{report}
-\title{`cs229'---Notes}
-\date{Started 1st October 2024}
+\title{An Introductory Course in Computational Neuroscience---Paul Miller (Notes)}
+\date{Started 14 Dec 2024}
 \author{Malcolm}
 \usepackage{amsmath} %import math
 \usepackage{mathtools} %more math
@@ -14,6 +14,30 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\newpage
+
+\section{LIF}
+\subsection{Formula}
+The \textit{Nernst potential} $E_A$ of an ion $A$ of charge $z_A$ with intracellular concentration $[A_{\text{in}}]$ and extracellular concentration $[A_{\text{out}}]$ is given by
+\begin{equation*}
+E_A=\frac{k_BT}{z_Aq_e}\ln\left(\frac{[A_{\text{out}}]}{[A_{\text{in}}]}\right)
+\end{equation*}
+where $T$ is the temperature in Kelvin, $k_B$ the Boltzmann constant $(1.39\times10^{-23}JK^{-1})$ (which converts units of temperature to units of thermal energy). $q_e$ is the fundamental electronic charge
+$(1.60\times10^{-19}C)$.
+The current through a channel is given by
+\begin{equation*}
+I_t=G_t(V_m-E_t)
+\end{equation*}
+Where $G_t$ represents conductance and $E_t$ the nernst potential; $t$ represents the type of channel. The total membrane current $I_m$ can be modelled as
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
