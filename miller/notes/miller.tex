@@ -71,12 +71,44 @@ The current is defined as positive when it flows \textit{out} of the cell; with 
 \end{equation*}
 Fixing the capacitance we obtain the dynamics of the resting membrane potential as
 \begin{equation*}
-C_m\frac{dV}{dt}=G_L(E_L-V_m)
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)
 \end{equation*}
 This is a linear first order ODE. 
 \newpage
 
-\subsection{}
+\subsection{Solution for Leaky ODE}
+We had the dynamics of the resting membrane potential as
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)
+\end{equation*}
+Expressing in standard form and solving by integrating factor:
+\begin{align*}
+\frac{dV_m}{dt}+\frac{G_L}{C_m}V_m&=\frac{G_L}{C_m}E_L\\
+V_m&=\frac{1}{\exp\left(\frac{G_L}{C_m}t\right)}\left(\int\exp\left(\frac{G_L}{C_m}t\right)\cdot\frac{G_L}{C_m}E_L\,dt+c\right)
+\end{align*}
+To simplify we define the \textit{time constant} $\tau_m=C_m/G_L$:
+\begin{align*}
+V_m&=\frac{1}{\exp\left(\frac{t}{\tau_m}\right)}\left(\int\exp\left(\frac{1}{\tau_m}t\right)\cdot\frac{1}{\tau_m}E_L\,dt+c\right)\\
+&=\exp\left(-\frac{t}{\tau_m}\right)\left(\exp\left(\frac{t}{\tau_m}\right)E_L+A\right)\\
+&=E_L+\exp\left(-\frac{t}{\tau_m}\right)\cdot A
+\end{align*}
+At initial condition $V_m(0)$:
+\begin{equation*}
+V_m(0)=E_L+A\implies A=V_m(0)-E_L
+\end{equation*}
+With that we have the solution
+\begin{equation*}
+V_m=E_L+(V_m(0)-E_L)\exp\left(-\frac{t}{\tau_m}\right)
+\end{equation*}
+See that the equation tends to $E_L$, and that $\tau_m$ dictates how fast this decay occurs (thus the name). Illustrated here using code from \texttt{leakymembrane.py}:
+
+
+
+
+
+
+
+
 
 
 
