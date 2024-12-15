@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-E_l=-70 #leak conductance
+E_l=-70 #leak potential
 V_0=-50 #initial condition
 C_m=100 #membrane conductance
 tau=0.5 #time constant

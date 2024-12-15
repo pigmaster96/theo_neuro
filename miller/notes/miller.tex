@@ -112,8 +112,18 @@ V_m=E_L+(V_m(0)-E_L)\exp\left(-\frac{t}{\tau_m}\right)
 \includegraphics[width=10cm]{2}\\
 \end{center}
 \end{figure}
+\newpage
 
-
+\subsection{Leaky-Integrate-and-Fire}
+The LIF introduces a framework on which we can build more realistic models of neurons. It is essentially the intial model
+for the leaky membrane with an additional term $I_\text{app}$ modelling an applied current. The spike is modelled by the membrane potential being reset 
+to a low (hyperpolarised) value $V_\text{reset}$
+after the potential reaches some threshold $V_{th}$ (threshold potential):
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app};\text{if $V_m>V_{th}$ then $V_m\mapsto V_\text{reset}$}
+\end{equation*}
+Notice that an actual `spike' shape hasn't been modelled, and would have to be put in by hand before $V_m$ is reset; spike times are recorded at the time when
+the membrane potential crosses the threshold.
 
 
 
