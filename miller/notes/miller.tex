@@ -123,7 +123,39 @@ after the potential reaches some threshold $V_{th}$ (threshold potential):
 C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app};\text{if $V_m>V_{th}$ then $V_m\mapsto V_\text{reset}$}
 \end{equation*}
 Notice that an actual `spike' shape hasn't been modelled, and would have to be put in by hand before $V_m$ is reset; spike times are recorded at the time when
-the membrane potential crosses the threshold.
+the membrane potential crosses the threshold.\\
+\vspace{1mm}\\
+The following was simulated using code from \texttt{LIFfunc.py}:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=9cm]{3}\\
+\end{center}
+\textbf{Threshold current}\\
+See that there is an insufficient level for $I_{\text{app}}$ where no `firing' occurs (the membrane potential does not reach threshold and the model does not spike).
+Setting $dV_m/dt=0$ allows us to obtain the \textit{steady state} membrane potential as
+\begin{equation*}
+V^{ss}_m=E_L+I_{\text{app}}/G_L
+\end{equation*}
+If the steady state is below threshold then the model does not fire. By setting
+$V^{ss}_m=V_{th}$ we can obtain the \textit{threshold current} $I_{th}$---the minimum applied
+current required to elicit firing:
+\begin{equation*}
+I_{th}=G_L(V_{th}-E_L)
+\end{equation*}
+\end{figure}
+\newpage
+
+\subsection{}
+
+
+
+
+
+
+
+
+
+
 
 
 
