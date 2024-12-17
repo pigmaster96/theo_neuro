@@ -3,5 +3,5 @@
 \contentsline {subsection}{\numberline {0.1.2}Solution for Leaky ODE}{4}{}%
 \contentsline {subsection}{\numberline {0.1.3}Leaky-Integrate-and-Fire}{6}{}%
 \contentsline {subsection}{\numberline {0.1.4}Firing rate-Current (F-I) curve of the LIF model}{7}{}%
-\contentsline {subsection}{\numberline {0.1.5}Solution for LIF with fixed applied current and no reset}{8}{}%
-\contentsline {subsection}{\numberline {0.1.6}}{10}{}%
+\contentsline {subsection}{\numberline {0.1.5}Solution for LIF with fixed applied current and no reset}{9}{}%
+\contentsline {subsection}{\numberline {0.1.6}Simulated firing rate vs Calculated firing rate}{11}{}%

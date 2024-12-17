@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1734423974 "miller.tex" "miller.pdf" "miller" 1734423974
+["pdflatex"] 1734453056 "miller.tex" "miller.pdf" "miller" 1734453057
   "/etc/texmf/web2c/texmf.cnf" 1718295375 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -49,6 +49,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1248133631 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
@@ -87,9 +88,9 @@
   "images//1.png" 1734260190 44275 d34b6e69ebf4622b68b26be116c8db1d ""
   "images//2.png" 1734278273 34341 586da0d2ad5a88d669ddd159dd43e6d2 ""
   "images//3.png" 1734358675 30013 21655489255bcec9ca61d97744d999d4 ""
-  "miller.aux" 1734423974 886 42d0298c8835c7add775133ec7ce770a "pdflatex"
-  "miller.tex" 1734423972 9291 3c8383dcccd2ddd1023f8d330eff4269 ""
-  "miller.toc" 1734423974 566 6883db7903b9cedcf3b42d86d5019b39 "pdflatex"
+  "miller.aux" 1734453057 933 97978a254e5f2e68ca7c59dc84e828c0 "pdflatex"
+  "miller.tex" 1734453055 11085 328811cd1d7992ee74cda8624e411527 ""
+  "miller.toc" 1734453057 613 81854e878aa34578182a4014e806a9d3 "pdflatex"
   (generated)
   "miller.aux"
   "miller.log"

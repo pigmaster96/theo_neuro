@@ -156,23 +156,40 @@ C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}
 \end{equation*}
 When the applied current is fixed this equation can be solved:
 \begin{equation*}
-V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
+V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau_m}\right)
 \end{equation*}
-where $V^{ss}_m$ denotes the steady state membrane potential.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+where $V^{ss}_m$ denotes the steady state membrane potential.\\
+\vspace{1mm}\\
+\textbf{Interspike Interval (ISI)}\\
+We want the time $T$ when the next spike is produced, so we have $V_m(T)=V_{th}$ and solve for it. We also set the initial condition to $V_{\text{reset}}$ since we
+want the time between reset and threshold:
+\begin{equation*}
+V_{th}=V_m(T)=V^{ss}_m+\left(V_{\text{reset}}-V^{ss}_m\right)\exp\left(-\frac{T}{\tau_m}\right)
+\end{equation*}
+Rearranging:
+\begin{equation*}
+\exp\left(-\frac{T}{\tau}\right)=\frac{V_{th}-V^{ss}_m}{V_\text{reset}-V^{ss}_m}
+=\frac{V^{ss}_m-V_{th}}{V^{ss}_m-V_\text{reset}}
+\end{equation*}
+See that the term on the right must be positive and less than 1 for a solution to exist with $T>0$; since $0<e^{-x}<1$ for all real $x>0$.\\
+\vspace{1mm}\\
+This reflects the fact that we can only calculate the time between spikes if $V^{ss}_m>V_{th}$ for spiking to occur in the first place.
+(If $V_{\text{reset}}<V^{ss}_m<V_{th}$ the right side would be negative; if $V^{ss}_m<V_{\text{reset}}<V_{th}$ it would be greater than 1.)\\
+\vspace{1mm}\\
+Solving for $T$ gives us the time from one spike to the next---the \textit{interspike interval} (ISI):
+\begin{equation*}
+\text{ISI}=T=-\tau_m\ln\left(\frac{V^{ss}_m-V_{th}}{V^{ss}_m-V_\text{reset}}\right)
+=\tau_m\ln\left(\frac{V^{ss}_m-V_{th}}{V^{ss}_m-V_\text{reset}}\right)
+\end{equation*}
+(next page)
+\newpage
+\noindent\textbf{Firing rate}\\
+The firing rate is the inverse of the ISI:
+\begin{equation*}
+f(I_{app})=\frac{1}{\text{ISI}}=\frac{1}{\tau_m\ln\left(\frac{V^{ss}_m-V_{th}}{V^{ss}_m-V_\text{reset}}\right)}=
+\frac{1}{\tau_m\ln\left(\frac{E_L+I_{\text{app}}/G_L-V_{th}}{E_L+I_{\text{app}}/G_L-V_\text{reset}}\right)}
+\end{equation*}
+This is a rare case where we have a closed form solution for the firing rate curve. 
 \newpage
 
 \subsection{Solution for LIF with fixed applied current and no reset}
@@ -222,7 +239,7 @@ V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
 \end{equation*}
 \newpage
 
-\subsection{}
+\subsection{Simulated firing rate vs Calculated firing rate}
 
 
 
