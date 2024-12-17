@@ -145,18 +145,84 @@ I_{th}=G_L(V_{th}-E_L)
 \end{figure}
 \newpage
 
+\subsection{Firing rate-Current (F-I) curve of the LIF model}
+For the LIF (and fixed applied current), we can come up with a closed-form way of determining the time for the neuron's 
+membrane potential to increase from its reset value to the threshold.\\
+\vspace{1mm}\\
+\textbf{Solution for LIF model with constant $I_{\text{app}}$}\\
+Ignoring the hard reset part of the LIF (this doesn't matter since we are trying to find time between a period where the model doesn't reset), we have
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}
+\end{equation*}
+When the applied current is fixed this equation can be solved:
+\begin{equation*}
+V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
+\end{equation*}
+where $V^{ss}_m$ denotes the steady state membrane potential.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\subsection{Solution for LIF with fixed applied current and no reset}
+Ignoring the hard reset part of the LIF and fixing $I_{\text{app}}$, we have
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}
+\end{equation*}
+This can be solved. Where $\tau=C_m/G_L$:
+\begin{equation*}
+\frac{dV_m}{dt}=\frac{G_L}{C_m}(E_L-V_m)+\frac{I_\text{app}}{C_m}
+\end{equation*}
+In standard form:
+\begin{equation*}
+\frac{dV_m}{dt}+\frac{1}{\tau}V_m=\frac{1}{\tau}E_L+\frac{I_\text{app}}{C_m}
+\end{equation*}
+Solving by integrating factor:
+\begin{align*}
+V_m(t)&=\frac{1}{\exp(t/\tau)}\left(\int\exp\left(\frac{t}{\tau}\right)\left(\frac{1}{\tau}E_L+\frac{I_\text{app}}{C_m}\right)\,dt+c\right)\\
+&=\exp\left(-\frac{t}{\tau}\right)\left(\tau\exp\left(\frac{t}{\tau}\right)\left(\frac{1}{\tau}E_L+\frac{I_\text{app}}{C_m}\right)+A\right)\\
+&=\exp\left(-\frac{t}{\tau}\right)\left(\exp\left(\frac{t}{\tau}\right)E_L+\exp\left(\frac{t}{\tau}\right)\tau\frac{I_\text{app}}{C_m}+A\right)\\
+&=E_L+\frac{C_m}{G_L}\frac{I_\text{app}}{C_m}+A\exp\left(-\frac{t}{\tau}\right)\\
+&=E_L+\frac{I_\text{app}}{G_L}+A\exp\left(-\frac{t}{\tau}\right)
+\end{align*}
+Initial condition:
+\begin{align*}
+V_m(0)&=E_L+\frac{I_\text{app}}{G_L}+A\\
+A&=V_m(0)-\left(E_L+\frac{I_\text{app}}{G_L}\right)
+\end{align*}
+We have the solution
+\begin{equation*}
+V_m(t)=E_L+\frac{I_\text{app}}{G_L}+\left(V_m(0)-\left(E_L+\frac{I_\text{app}}{G_L}\right)\right)\exp\left(-\frac{t}{\tau}\right)
+\end{equation*}
+(next page)
+\newpage
+\noindent\textbf{In relation to steady state potential}\\
+We had
+\begin{equation*}
+V_m(t)=E_L+\frac{I_\text{app}}{G_L}+\left(V_m(0)-\left(E_L+\frac{I_\text{app}}{G_L}\right)\right)\exp\left(-\frac{t}{\tau}\right)
+\end{equation*}
+Recall that setting $dV_m/dt=0$ in the LIF equation (again ignoring the hard reset) gave us the steady state membrane potential $V^{ss}_m$:
+\begin{equation*}
+V^{ss}_m=E_L+I_{\text{app}}/G_L
+\end{equation*}
+See that this can be slotted into our solution:
+\begin{equation*}
+V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
+\end{equation*}
+\newpage
+
 \subsection{}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
