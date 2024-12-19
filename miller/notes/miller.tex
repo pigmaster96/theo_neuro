@@ -242,6 +242,35 @@ V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
 \subsection{Simulated firing rate vs Calculated firing rate}
 
 
+\newpage
+
+\subsection{Euler-Mayamara method---LIF with noise}
+Noise can be incorporated using a white noise process $w(t)$, defined as having zero mean.\\ 
+\vspace{1mm}\\
+\textbf{Definition}\\
+Here we define noise as having variance equal to a delta function in time, so that
+\begin{equation*}
+\mathbb{E}[w(t)]=0\quad\text{and}\quad\mathbb{E}[w(t)w(t')]=\delta(t-t')
+\end{equation*}
+(the second equality holds since mean is zero)
+The delta function is defined to be 0 unless $t=t'$; the idea here is that the value of $w(t)$ is uncorrelated with the value of $w(t')$ unless $t=t'$ 
+(which would also mean that $w(t)=w(t')$).\\
+\vspace{1mm}\\
+\textbf{Simulating}\\
+The delta-function has the property where its integral over all time is equal to one:
+\begin{equation*}
+\int^\infty_{-\infty}\delta(t-t')\,dt=1
+\end{equation*}
+it has units of inverse-time $(s^{-1})$; this means that the white noise function has units of the square-root of inverse time $(s^{-0.5})$ (this is important in
+simulations---it indicates how to scale the term with each timestep). \\
+\vspace{1mm}\\
+When we update the variable (in this case using the forward euler method), 
+the noise term is thus included as:
+\begin{equation*}
+x_{n+1}=x_n+f(x_n)\Delta t+\sigma\tilde{w}_n\sqrt{\Delta t}
+\end{equation*}
+Where $\tilde{w}_n$ is a random number selected from a distribution of 0 mean and unit variance (in order to satisfy the earlier definition---the noise at any given time point 
+is not correlated with any other point, and has variance 1).
 
 
 
