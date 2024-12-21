@@ -26,20 +26,25 @@ class LIFneuron:
                       'reset potential':self.V_r,'applied current':self.I_app}
     
 
-    def get(self,attr):
+    def get(self,attrvec):
         '''
-        Return requested property, raises exception if undefined
+        Return requested properties, raises exception if undefined
         '''
-        if attr in ['leak potential','membrane capacitance','leak conductance',
-                    'threshold potential','reset potential','applied current']:
-            return self.attrvec[attr]
-        raise Exception("Unknown requested property")
+        out={}
+        for attr in attrvec:
+            if attr in ['leak potential','membrane capacitance','leak conductance',
+                        'threshold potential','reset potential','applied current']:
+                out[attr]=(self.attrvec[attr])
+            else:
+                raise Exception("Unknown requested property")
+        return out
     
 
-    def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.2):
+    def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.2,noise=False):
         '''
         Takes time limits in ms (tmin,tmax), increment(dt), and proportion of time vec to wait and stop
         before and after stimulating (unstim_prop) *must be between 0 and 1*
+        
 
         Returns time vector, forward euler numerical estimate of membrane potential
         values, applied current vector, array of spike indices
@@ -64,38 +69,3 @@ class LIFneuron:
                 V[i+1]=self.V_r
 
         return t,V,Iappvec,spikeind
-    
-
-
-
-
-n1=LIFneuron(I_app=180)
-n2=LIFneuron(I_app=201)
-
-t1,V1,I1,s1=n1.simulate()
-t2,V2,I2,s2=n2.simulate()
-
-#plot
-fig=plt.figure()
-plt.subplot(2,2,4)
-plt.plot(t2,V2)
-plt.xlabel("Time(ms)")
-ymin,ymax=plt.ylim()
-
-plt.subplot(2,2,3)
-plt.plot(t1,V1)
-plt.xlabel("Time(ms)")
-plt.ylabel("$V_m(mV)$")
-plt.ylim(ymin,ymax)
-
-plt.subplot(2,2,2)
-plt.plot(t2,I2)
-ymin,ymax=plt.ylim()
-plt.title("$0.21nA$")
-
-plt.subplot(2,2,1)
-plt.ylabel("$I_{app}(nA)$")
-plt.ylim(ymin,ymax)
-plt.title("$0.18nA$")
-
-plt.show()

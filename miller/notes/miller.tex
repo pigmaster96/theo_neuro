@@ -240,8 +240,18 @@ V_m(t)=V^{ss}_m+\left(V_m(0)-V^{ss}_m\right)\exp\left(-\frac{t}{\tau}\right)
 \newpage
 
 \subsection{Simulated firing rate vs Calculated firing rate}
-
-
+The following was plotted using code from \texttt{f-i\_curves.py}:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{4}\\
+\end{center}
+LIF neurons were initialised with default parameters outlined in \texttt{LIFclass.py}. 
+Applied currents ranging from 150 to 400$pA$ were applied; simulated firing rate was
+calculated and compared to separately calculated theoretical firing rate values.
+\end{figure}\\
+The threshold current, if calculated from the default values for this simulation, is
+200$pA$. See that this coincides with the simulation---spiking only starts after applied
+current exceeds threshold current.
 \newpage
 
 \subsection{Euler-Mayamara method---LIF with noise}
