@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import trange
+import random
 
 class LIFneuron:
     '''
@@ -14,13 +15,14 @@ class LIFneuron:
     '''
 
     def __init__(self,E_l=-70,C_m=100,G_l=10,
-                 V_th=-50,V_r=-80,I_app=201):
+                 V_th=-50,V_r=-80,I_app=201,sigma_i=0.1):
         self.E_l=E_l
         self.C_m=C_m
         self.G_l=G_l
         self.V_th=V_th
         self.V_r=V_r
         self.I_app=I_app
+        self.sigma_i=sigma_i
         self.attrvec={'leak potential':self.E_l,'membrane capacitance':self.C_m,
                       'leak conductance':self.G_l,'threshold potential':self.V_th,
                       'reset potential':self.V_r,'applied current':self.I_app}
@@ -63,7 +65,11 @@ class LIFneuron:
         #fwd euler
         for i in range(len(t)-1):
             dvdt=(self.E_l-V[i])/tau+Iappvec[i]/self.C_m
-            V[i+1]=V[i]+dt*dvdt
+            if noise:
+                V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
+            else:
+                V[i+1]=V[i]+dt*dvdt
+
             if V[i+1]>self.V_th:
                 spikeind.append(i+1)
                 V[i+1]=self.V_r
