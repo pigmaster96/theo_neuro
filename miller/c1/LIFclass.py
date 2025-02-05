@@ -12,6 +12,7 @@ class LIFneuron:
     V_th: Threshold potential(mV)
     V_r: Reset potential(mV)
     I_app: Applied current magnitude for 3/5ths the simulation duration(pA)
+    sigma_i: Noise scaling---if applicable
     '''
 
     def __init__(self,E_l=-70,C_m=100,G_l=10,
@@ -25,7 +26,8 @@ class LIFneuron:
         self.sigma_i=sigma_i
         self.attrvec={'leak potential':self.E_l,'membrane capacitance':self.C_m,
                       'leak conductance':self.G_l,'threshold potential':self.V_th,
-                      'reset potential':self.V_r,'applied current':self.I_app}
+                      'reset potential':self.V_r,'applied current':self.I_app,
+                      'noise scaling':self.sigma_i}
     
 
     def get(self,attrvec):
@@ -35,7 +37,7 @@ class LIFneuron:
         out={}
         for attr in attrvec:
             if attr in ['leak potential','membrane capacitance','leak conductance',
-                        'threshold potential','reset potential','applied current']:
+                        'threshold potential','reset potential','applied current','noise scaling']:
                 out[attr]=(self.attrvec[attr])
             else:
                 raise Exception("Unknown requested property")
@@ -75,3 +77,19 @@ class LIFneuron:
                 V[i+1]=self.V_r
 
         return t,V,Iappvec,spikeind
+    
+
+
+class LIFextended(LIFneuron):
+    '''LIF, but with different types of refractory period'''
+    def __init__(self,E_l=-70,C_m=100,G_l=10,
+                 V_th=-50,V_r=-80,I_app=201,sigma_i=0.1):
+        super().__init__(E_l,C_m,G_l,
+                 V_th,V_r,I_app,sigma_i)
+
+
+test=LIFextended()
+test1,test2,test3,test4=test.simulate()
+plt.figure()
+plt.plot(test1,test2)
+plt.show()
