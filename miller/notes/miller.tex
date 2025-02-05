@@ -285,11 +285,38 @@ is not correlated with any other point, and has variance 1).
 \includegraphics[width=10cm]{5}\\
 \end{center}
 Figure: Noise incorporated with $\sigma_I$ set to 0.5, see \texttt{LIFwithnoise.py}.
+\newpage
 
-
-
-
-
+\subsection{Models for the refractory period}
+\textbf{Model 1: Forced Voltage Clamp}\\
+Fix the voltage at its reset value folllowing a spike for the duration of the refractory period.\\
+\vspace{1mm}\\
+One disadvantage to this would be that the as the firing rate of the neuron increases, the neuron spends a greater proportion of its time in the refractory period 
+(with the membrane potential at its low reset value). The mean membrane potential can decrease with increased input in such a model, unlike real neurons.\\
+\vspace{1mm}\\
+\textbf{Model 2: Refractory Conductance}\\
+The refractory period can be mimicked by addition of a large conductance that produces a large outward (hyperpolarising) \textit{potassium current}. This refractory
+conductance increases at the time of each spike and decays between spike times with a short time constant:
+\begin{equation*}
+\frac{dG_{\text{ref}}(t)}{dt}=-\frac{G_{\text{ref}}(t)}{\tau_{\text{ref}}}\quad\text{after spike }G_{\text{ref}}\mapsto G_{\text{ref}}+\Delta G
+\end{equation*}
+See that since we model this as an outward potassium current, it yields an additional term of
+\begin{equation*}
+G_{\text{ref}}[E_k-V_m(t)]
+\end{equation*}
+Where $E_k$ denotes the nernst potential for potassium ions. See that when $G_{\text{ref}}$ is much larger that the leak conductance this will essentially clamp the membrane
+potential at $E_k$.\\
+\vspace{1mm}\\
+Also see that this means that the reset step of the LIF model can be omitted in simulations using this method, because the step increase in $G_{\text{ref}}$ will cause the 
+desired drop in membrane potential.
+Our final model looks like
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}+G_{\text{ref}}[E_k-V_m(t)]
+\end{equation*}
+Unlike the first method, in this method the time spent at the reset value depends on the strength of the other currents entering the neuron---the stronger the other inputs the more quickly they can overcome the decaying refractory current.
+\newpage
+\noindent\textbf{Model 3: Raised Threshold}\\
+The
 
 
 

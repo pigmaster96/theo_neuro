@@ -6,3 +6,4 @@
 \contentsline {subsection}{\numberline {0.1.5}Solution for LIF with fixed applied current and no reset}{9}{}%
 \contentsline {subsection}{\numberline {0.1.6}Simulated firing rate vs Calculated firing rate}{11}{}%
 \contentsline {subsection}{\numberline {0.1.7}Euler-Mayamara method---LIF with noise}{12}{}%
+\contentsline {subsection}{\numberline {0.1.8}Models for the refractory period}{13}{}%
