@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1738961982 "miller.tex" "miller.pdf" "miller" 1738961983
+["pdflatex"] 1739014437 "miller.tex" "miller.pdf" "miller" 1739014438
   "/etc/texmf/web2c/texmf.cnf" 1718295375 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -91,9 +91,9 @@
   "images//3.png" 1734358675 30013 21655489255bcec9ca61d97744d999d4 ""
   "images//4.png" 1734806676 74024 5bc78912a48651466cf6f06bd94d3313 ""
   "images//5.png" 1738706938 153874 0c5cfc0dae930627eaa4e7d1ad1d3695 ""
-  "miller.aux" 1738961983 1195 d3e5f3ec3744b152a50959cc9360bbd2 "pdflatex"
-  "miller.tex" 1738961981 16318 1337551bc1451ce95085b43da6c1cdf7 ""
-  "miller.toc" 1738961983 793 677a31116cadfac003f05eff65168567 "pdflatex"
+  "miller.aux" 1739014438 1312 d43f9ff5013ff86ba139f8f2390ef26a "pdflatex"
+  "miller.tex" 1739014433 17574 aa6d46bb53f9c501f4b4eb44b0f7d6c8 ""
+  "miller.toc" 1739014438 869 5fcc5223ca326c66deaee77d3eb043d4 "pdflatex"
   (generated)
   "miller.aux"
   "miller.log"

@@ -327,6 +327,20 @@ the sooner the membrane potential can reach the decaying threshold potential.\\
 \vspace{1mm}\\
 See that the `reset' in this method can be implemented either with the usual hard membrane potential reset upon reaching threshold, or with a refractory conductance (method 2).
 
+\newpage
+
+\subsection{Spike-Rate Adaptation}
+Many neurons respond to a pulse of constant current with a spike rate that decreases over time following the first spike (the first interspike interval is substantially shorter than the second and so on); this is called spike-rate/frequency adaptation.\\
+\vspace{1mm}\\
+\textbf{Implementation}\\
+Spike rate adaptation can be simulated in a LIF model by incrementing a potassium conductance following a spike, similar to an earlier described model of refractory conductance, that decays between spikes.\\
+\vspace{1mm}\\
+Although the changes in the LIF model necessary for incorporating spike-rate adaptationa re \textit{qualitatively} identical to that of incorporating refractory conductance, 
+the difference here is in the parameter values used for simulation; the incremental conductance following each spike is much smaller for spike-rate adaptation (we don't prevent spikes by making incrementing it large enough to clamp the membrane potential at a low value.)\\
+\vspace{1mm}\\
+Additionally the time scale for the delay of conductance should be much longer in for spike-rate adaptation (longer than the typical interval between spikes) so that the 
+conductance can \textit{accumulate over a spike train}.
+
 
 
 
