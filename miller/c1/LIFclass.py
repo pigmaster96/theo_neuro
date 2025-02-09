@@ -80,16 +80,93 @@ class LIFneuron:
     
 
 
-class LIFextended(LIFneuron):
+class LIFneuronV2(LIFneuron):
     '''LIF, but with different types of refractory period'''
     def __init__(self,E_l=-70,C_m=100,G_l=10,
                  V_th=-50,V_r=-80,I_app=201,sigma_i=0.1):
-        super().__init__(E_l,C_m,G_l,
-                 V_th,V_r,I_app,sigma_i)
+        self.E_l=E_l
+        self.C_m=C_m
+        self.G_l=G_l
+        self.V_th=V_th
+        self.V_r=V_r
+        self.I_app=I_app
+        self.sigma_i=sigma_i
+        self.attrvec={'leak potential':self.E_l,'membrane capacitance':self.C_m,
+                      'leak conductance':self.G_l,'threshold potential':self.V_th,
+                      'reset potential':self.V_r,'applied current':self.I_app,
+                      'noise scaling':self.sigma_i}
+
+    def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.1,refractory_model='clamp',noise=False,SRA=False):
+        '''
+        Takes time limits in ms (tmin,tmax), increment(dt), and proportion of time vec to wait and stop
+        before and after stimulating (unstim_prop) *must be between 0 and 1*   
+
+        Returns time vector, forward euler numerical estimate of membrane potential
+        values, applied current vector, array of spike indices
+
+        V2: now incorporates requested model for refractory period
+        '''
+        models=['clamp','conductance','threshold']
+        if not refractory_model in models:
+            raise Exception("Unknown refractory model")
+
+        t=np.arange(tmin,tmax,dt) #init time vector
+        V=np.zeros(len(t)) #init results vector
+        Iappvec=np.zeros(len(t)) #init vector for applied current
+        spikeind=[] #init array for spike indices
+
+        tau=self.C_m/self.G_l #time constant
+        unstim_time=round(len(t)*unstim_prop) #number of timesteps before and after stim
+
+        Iappvec[unstim_time:len(t)-unstim_time]=self.I_app #applied current magnitude
+        V[0]=self.E_l #set initial potential to leak potential
+
+        if refractory_model=='clamp':
+            tref_0=10
+            tref=tref_0
+            refractory=False
+
+            #fwd euler with flag for refractory period
+            for i in range(len(t)-1):
+                if refractory:
+                    tref-=dt
+                    V[i+1]=self.V_r
+                    if tref<=0:
+                        refractory=False
+                else:
+                    dvdt=(self.E_l-V[i])/tau+Iappvec[i]/self.C_m
+                    if noise:
+                        V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
+                    else:
+                        V[i+1]=V[i]+dt*dvdt
+                    #spike
+                    if V[i+1]>self.V_th:
+                        spikeind.append(i+1)
+                        V[i+1]=self.V_r
+                        tref=tref_0
+                        refractory=True
+        return t,V,Iappvec,spikeind
 
 
-test=LIFextended()
+
+
+
+
+        
+    
+
+
+test=LIFneuronV2()
 test1,test2,test3,test4=test.simulate()
+
 plt.figure()
+plt.subplot(2,1,1)
 plt.plot(test1,test2)
+
+plt.subplot(2,1,2)
+booleanarr=np.zeros(len(test1))
+booleanarr[test4]=1
+print(booleanarr)
+plt.plot(test1,booleanarr)
+
 plt.show()
