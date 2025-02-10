@@ -122,6 +122,7 @@ class LIFneuronV2(LIFneuron):
         Iappvec[unstim_time:len(t)-unstim_time]=self.I_app #applied current magnitude
         V[0]=self.E_l #set initial potential to leak potential
 
+        #if clamp
         if refractory_model=='clamp':
             tref_0=10
             tref=tref_0
@@ -147,10 +148,41 @@ class LIFneuronV2(LIFneuron):
                         tref=tref_0
                         refractory=True
             return t,V,Iappvec,spikeind
-    
+
+
+        #if threshold 
         if refractory_model=='threshold':
-            V_thref=self.V_th #set intiial raised threshold
-            tau_th=1 #time constant for threshold decay
+            V_thref=np.zeros(len(t)) #threshold potential vector
+            V_thref[0]=self.V_th #set intiial raised threshold
+            tau_th=3 #time constant for threshold decay
+            deltath=20
+
+            for i in range(len(t)-1):
+                #fwd euler threshold potential
+                dVthdt=(self.V_th-V_thref[i])/tau_th
+                V_thref[i+1]=V_thref[i]+dVthdt*dt
+
+                #fwd euler membrane potential
+                dvdt=(self.E_l-V[i])/tau+Iappvec[i]/self.C_m
+                if noise:
+                    V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
+                else:
+                    V[i+1]=V[i]+dt*dvdt
+
+                #spike
+                if V[i+1]>V_thref[i+1]:
+                    spikeind.append(i+1)
+                    V[i+1]=self.V_r
+                    V_thref[i+1]+=deltath
+            return  t,V,Iappvec,spikeind,V_thref
+
+
+
+
+
+
+
+
 
 
 
@@ -162,15 +194,16 @@ class LIFneuronV2(LIFneuron):
 
 
         
-    
+
 
 
 test=LIFneuronV2()
-test1,test2,test3,test4=test.simulate()
+test1,test2,test3,test4,test5=test.simulate(refractory_model='threshold')
 
 plt.figure()
 plt.subplot(2,1,1)
 plt.plot(test1,test2)
+plt.plot(test1,test5,'--')
 
 plt.subplot(2,1,2)
 booleanarr=np.zeros(len(test1))
