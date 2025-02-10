@@ -106,7 +106,8 @@ class LIFneuronV2(LIFneuron):
 
         V2: now incorporates requested model for refractory period
         '''
-        models=['clamp','conductance','threshold']
+        models=['clamp','threshold','conductance',
+                'threshold and conductance']
         if not refractory_model in models:
             raise Exception("Unknown refractory model")
 
@@ -145,7 +146,15 @@ class LIFneuronV2(LIFneuron):
                         V[i+1]=self.V_r
                         tref=tref_0
                         refractory=True
-        return t,V,Iappvec,spikeind
+            return t,V,Iappvec,spikeind
+    
+        if refractory_model=='threshold':
+            V_thref=self.V_th #set intiial raised threshold
+            tau_th=1 #time constant for threshold decay
+
+
+
+
 
 
 
