@@ -96,7 +96,10 @@ class LIFneuronV2(LIFneuron):
                       'reset potential':self.V_r,'applied current':self.I_app,
                       'noise scaling':self.sigma_i}
 
-    def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.1,refractory_model='clamp',noise=False,SRA=False):
+    def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.1,
+                 refractory_model='clamp',tref_0=10, #clamp refractory period
+                 tau_th=3,deltath=20, #time constant for raised threshold decay and threshold increment
+                 noise=False,SRA=False):
         '''
         Takes time limits in ms (tmin,tmax), increment(dt), and proportion of time vec to wait and stop
         before and after stimulating (unstim_prop) *must be between 0 and 1*   
@@ -124,7 +127,6 @@ class LIFneuronV2(LIFneuron):
 
         #if clamp
         if refractory_model=='clamp':
-            tref_0=10
             tref=tref_0
             refractory=False
 
@@ -154,8 +156,6 @@ class LIFneuronV2(LIFneuron):
         if refractory_model=='threshold':
             V_thref=np.zeros(len(t)) #threshold potential vector
             V_thref[0]=self.V_th #set intiial raised threshold
-            tau_th=3 #time constant for threshold decay
-            deltath=20
 
             for i in range(len(t)-1):
                 #fwd euler threshold potential
@@ -175,6 +175,9 @@ class LIFneuronV2(LIFneuron):
                     V[i+1]=self.V_r
                     V_thref[i+1]+=deltath
             return  t,V,Iappvec,spikeind,V_thref
+        
+        #if conductance
+
 
 
 

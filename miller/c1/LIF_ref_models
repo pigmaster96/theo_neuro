@@ -10,20 +10,42 @@ test=LIFneuronV2()
 
 
 
+#clamp
+test1_1,test1_2,test1_3,test1_4=test.simulate(refractory_model='clamp')
+
+plt.figure("clamp")
+plt.subplot(2,1,1)
+plt.plot(test1_1,test1_2)
+plt.ylabel("$V_m(mV)$")
+
+
+plt.subplot(2,1,2)#indicate when spike occurs
+#output gives spike indices, create logic vector for each timepoint
+logicarr=np.zeros(len(test1_1))
+logicarr[test1_4]=1
+plt.plot(test1_1,logicarr)
+plt.ylabel("Spike")
+plt.xlabel("Time(ms)")
+
 
 #raised threshold
 test2_1,test2_2,test2_3,test2_4,test2_5=test.simulate(refractory_model='threshold')
 
-plt.figure()
+plt.figure("threshold")
 plt.subplot(2,1,1)
 plt.plot(test2_1,test2_2)
 plt.plot(test2_1,test2_5,'--')
+plt.ylabel("$V_m(mV)$")
 
 plt.subplot(2,1,2)#indicate when spike occurs
 #output gives spike indices, create logic vector for each timepoint
 logicarr=np.zeros(len(test2_1))
 logicarr[test2_4]=1
 plt.plot(test2_1,logicarr)
+plt.ylabel("Spike")
+plt.xlabel("Time(ms)")
+
+
 
 plt.show()
 
