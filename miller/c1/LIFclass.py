@@ -197,18 +197,3 @@ class LIFneuronV2(LIFneuron):
 
 
 
-test=LIFneuronV2()
-test1,test2,test3,test4,test5=test.simulate(refractory_model='threshold')
-
-plt.figure()
-plt.subplot(2,1,1)
-plt.plot(test1,test2)
-plt.plot(test1,test5,'--')
-
-plt.subplot(2,1,2)
-booleanarr=np.zeros(len(test1))
-booleanarr[test4]=1
-print(booleanarr)
-plt.plot(test1,booleanarr)
-
-plt.show()

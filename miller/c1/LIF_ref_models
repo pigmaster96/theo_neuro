@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import trange
+import random
+
+from LIFclass import LIFneuronV2
+
+
+test=LIFneuronV2()
+
+
+
+
+#raised threshold
+test2_1,test2_2,test2_3,test2_4,test2_5=test.simulate(refractory_model='threshold')
+
+plt.figure()
+plt.subplot(2,1,1)
+plt.plot(test2_1,test2_2)
+plt.plot(test2_1,test2_5,'--')
+
+plt.subplot(2,1,2)#indicate when spike occurs
+#output gives spike indices, create logic vector for each timepoint
+logicarr=np.zeros(len(test2_1))
+logicarr[test2_4]=1
+plt.plot(test2_1,logicarr)
+
+plt.show()
+
