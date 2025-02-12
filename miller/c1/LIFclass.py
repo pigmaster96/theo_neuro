@@ -99,7 +99,8 @@ class LIFneuronV2(LIFneuron):
     def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.1,
                  refractory_model='clamp',tref_0=10, #clamp refractory period
                  tau_th=3,deltath=20, #time constant for raised threshold decay and threshold increment
-                 noise=False,SRA=False):
+                 kNernst=-80,tau_g=0.2,deltaG=2000, #reset value, conductance timeconstant, increment
+                 noise=False):
         '''
         Takes time limits in ms (tmin,tmax), increment(dt), and proportion of time vec to wait and stop
         before and after stimulating (unstim_prop) *must be between 0 and 1*   
@@ -177,13 +178,41 @@ class LIFneuronV2(LIFneuron):
             return  t,V,Iappvec,spikeind,V_thref
         
         #if conductance
-        if refractory_model=='onductance':
+        if refractory_model=='conductance':
+            G_k=np.zeros(len(t)) #k conductance initially set to 0
 
+            for i in range(len(t)-1):
+                #fwd euler k conductance (decays to 0)
+                dG_kdt=-G_k[i]/tau_g
+                G_k[i+1]=G_k[i]+dG_kdt*dt
 
+                #fwd euler membrane potential with ref conductance term
+                dvdt=(self.E_l-V[i])/tau+\
+                    (Iappvec[i]+G_k[i]*(kNernst-V[i]))/self.C_m
+                if noise:
+                    V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
+                else:
+                    V[i+1]=V[i]+dt*dvdt
 
+                #spike
+                if V[i+1]>self.V_th:
+                    spikeind.append(i+1)
+                    G_k[i+1]+=deltaG
+            return t,V,Iappvec,spikeind,G_k
 
+            
 
+test=LIFneuronV2()
+test3_1,test3_2,test3_3,test3_4,test3_5=test.simulate(refractory_model='conductance',
+                                                      tau_g=2)
+plt.figure('conductance')
+plt.subplot(2,1,1)
+plt.plot(test3_1,test3_2)
 
+plt.subplot(2,1,2)
+plt.plot(test3_1,test3_5)
+
+plt.show()
 
 
 
