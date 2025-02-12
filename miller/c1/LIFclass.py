@@ -177,6 +177,11 @@ class LIFneuronV2(LIFneuron):
             return  t,V,Iappvec,spikeind,V_thref
         
         #if conductance
+        if refractory_model=='onductance':
+
+
+
+
 
 
 

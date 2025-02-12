@@ -9,7 +9,6 @@ from LIFclass import LIFneuronV2
 test=LIFneuronV2()
 
 
-
 #clamp
 test1_1,test1_2,test1_3,test1_4=test.simulate(refractory_model='clamp')
 
