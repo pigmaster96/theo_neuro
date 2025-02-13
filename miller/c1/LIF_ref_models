@@ -44,6 +44,16 @@ plt.plot(test2_1,logicarr)
 plt.ylabel("Spike")
 plt.xlabel("Time(ms)")
 
+#conductance
+test3_1,test3_2,test3_3,test3_4,test3_5=test.simulate(refractory_model='conductance',
+                                                      tau_g=2)
+
+plt.figure('conductance')
+plt.subplot(2,1,1)
+plt.plot(test3_1,test3_2)
+
+plt.subplot(2,1,2)
+plt.plot(test3_1,test3_5)
 
 
 plt.show()

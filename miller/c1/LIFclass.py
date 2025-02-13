@@ -199,18 +199,63 @@ class LIFneuronV2(LIFneuron):
                     spikeind.append(i+1)
                     G_k[i+1]+=deltaG
             return t,V,Iappvec,spikeind,G_k
+        
+        #if threshold and conductance
+        if refractory_model=='threshold and conductance':
+            #threshold model parameters
+            V_thref=np.zeros(len(t)) #threshold potential vector
+            V_thref[0]=self.V_th #set intiial raised threshold
+            #conductance model parameters
+            G_k=np.zeros(len(t)) #k conductance initially set to 0
+
+            for i in range(len(t)-1):
+                #fwd euler threshold potential
+                dVthdt=(self.V_th-V_thref[i])/tau_th
+                V_thref[i+1]=V_thref[i]+dVthdt*dt
+
+                #fwd euler k conductance (decays to 0)
+                dG_kdt=-G_k[i]/tau_g
+                G_k[i+1]=G_k[i]+dG_kdt*dt
+
+                #fwd euler membrane potential with ref conductance term
+                dvdt=(self.E_l-V[i])/tau+\
+                    (Iappvec[i]+G_k[i]*(kNernst-V[i]))/self.C_m
+                if noise:
+                    V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
+                else:
+                    V[i+1]=V[i]+dt*dvdt
+
+                #spike
+                if V[i+1]>V_thref[i+1]:
+                    spikeind.append(i+1)
+                    G_k[i+1]+=deltaG #increment G
+                    V_thref[i+1]+=deltath #increment threshold
+            return t,V,Iappvec,spikeind,V_thref,G_k
+
+
+
+
+
+
+
+
+
+
 
             
 
 test=LIFneuronV2()
-test3_1,test3_2,test3_3,test3_4,test3_5=test.simulate(refractory_model='conductance',
-                                                      tau_g=2)
-plt.figure('conductance')
+test4_1,test4_2,test4_3,test4_4,test4_5,test4_6=test.simulate(refractory_model='threshold and conductance',
+                                                              tau_g=2)
+
+plt.figure('threshold and conductance')
+
 plt.subplot(2,1,1)
-plt.plot(test3_1,test3_2)
+plt.plot(test4_1,test4_2)
+plt.plot(test4_1,test4_5,'--')
 
 plt.subplot(2,1,2)
-plt.plot(test3_1,test3_5)
+plt.plot(test4_1,test4_6)
 
 plt.show()
 
