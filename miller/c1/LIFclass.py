@@ -244,22 +244,6 @@ class LIFneuronV2(LIFneuron):
 
             
 
-test=LIFneuronV2()
-test4_1,test4_2,test4_3,test4_4,test4_5,test4_6=test.simulate(refractory_model='threshold and conductance',
-                                                              tau_g=2)
-
-plt.figure('threshold and conductance')
-
-plt.subplot(2,1,1)
-plt.plot(test4_1,test4_2)
-plt.plot(test4_1,test4_5,'--')
-
-plt.subplot(2,1,2)
-plt.plot(test4_1,test4_6)
-
-plt.show()
-
-
 
 
 
