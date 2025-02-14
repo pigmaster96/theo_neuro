@@ -289,8 +289,11 @@ Figure: Noise incorporated with $\sigma_I$ set to 0.5, see \texttt{LIFwithnoise.
 
 \subsection{Models for the refractory period}
 \textbf{Model 1: Forced Voltage Clamp}\\
-Fix the voltage at its reset value folllowing a spike for the duration of the refractory period.\\
-\vspace{1mm}\\
+Fix the voltage at its reset value folllowing a spike for the duration of the refractory period.
+\begin{center}
+\includegraphics[width=10cm]{6}\\
+\end{center}
+(lower figure indicates when spike occurs, upper graph membrane potential)
 One disadvantage to this would be that the as the firing rate of the neuron increases, the neuron spends a greater proportion of its time in the refractory period 
 (with the membrane potential at its low reset value). The mean membrane potential can decrease with increased input in such a model, unlike real neurons.\\
 \vspace{1mm}\\
@@ -313,10 +316,15 @@ Our final model looks like
 \begin{equation*}
 C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}+G_{\text{ref}}[E_k-V_m(t)]
 \end{equation*}
+(next page)\newpage
+\noindent\textbf{Refractory Conductance cont.}\\
+The upper graph plots membrane potential. The lower graph plots refractory K conductance.
+\begin{center}
+\includegraphics[width=10cm]{7}\\
+\end{center}
 Unlike the first method, in this method the time spent at the reset value depends on the strength of the other currents entering the neuron---the stronger the other inputs the more quickly they can overcome the decaying refractory current.\\
-(next page)
-\newpage
-\noindent\textbf{Model 3: Raised Threshold}\\
+\vspace{1mm}\\
+\textbf{Model 3: Raised Threshold}\\
 The voltage threshold for producing a spike can be raised immediately following a spike, before decaying back to its baseline level with a short time constant:
 \begin{equation*}
 \frac{dV_{th}(t)}{dt}=-\frac{V_{th}^{(0)}-V_{th}(t)}{\tau_{\text{ref}}}\quad\text{after spike }V_{th}\mapsto V_{th}+\Delta V
@@ -325,8 +333,19 @@ This method allows the mean membrane potential to increase with firing rate---as
 Also see that in this model, like the second model, the refractory period is not absolute---the greater the input, 
 the sooner the membrane potential can reach the decaying threshold potential.\\
 \vspace{1mm}\\
-See that the `reset' in this method can be implemented either with the usual hard membrane potential reset upon reaching threshold, or with a refractory conductance (method 2).
-
+See that the `reset' in this method can be implemented either with the usual hard membrane potential reset upon reaching threshold, or with a refractory conductance (method 2).\\
+(next page)\newpage
+\noindent\textbf{Raised Threshold Cont.}\\
+Raised threshold model plotted with dynamic threshold potential dotted. (lower figure indicates when spike occurs, upper graph membrane potential)
+\begin{center}
+\includegraphics[width=10cm]{8}\\
+\end{center}
+\textbf{Raised Threshold with Refractory Conductance}\\
+As mentioned, methods 2 and 3 can be combined. (lower graph representing refractory conductance)
+\begin{center}
+\includegraphics[width=10cm]{9}\\
+\end{center}
+Figures were generated using \texttt{LIF\_ref\_models.py} using models from\\ \texttt{LIFclass.py}.
 \newpage
 
 \subsection{Spike-Rate Adaptation}
@@ -340,7 +359,9 @@ the difference here is in the parameter values used for simulation; the incremen
 \vspace{1mm}\\
 Additionally the time scale for the delay of conductance should be much longer in for spike-rate adaptation (longer than the typical interval between spikes) so that the 
 conductance can \textit{accumulate over a spike train}.
+\newpage
 
+\subsection{AELIF model}
 
 
 
