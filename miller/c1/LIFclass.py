@@ -231,35 +231,3 @@ class LIFneuronV2(LIFneuron):
                     G_k[i+1]+=deltaG #increment G
                     V_thref[i+1]+=deltath #increment threshold
             return t,V,Iappvec,spikeind,V_thref,G_k
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
