@@ -361,11 +361,34 @@ Additionally the time scale for the delay of conductance should be much longer i
 conductance can \textit{accumulate over a spike train}.
 \newpage
 
-\subsection{AELIF model}
-
-
-
-
+\subsection{ELIF/AELIF model}
+\textbf{Exponential Leaky Integrate-and-Fire (ELIF)}\\
+Up till now, the gradient of the membrane potential has decreased as it approaches threshold. In reality,
+an inflexion point---at which the decreasing gradient begins increasing---is visible in real cells, where
+the voltage accelerates up past a threshold.\\
+\vspace{1mm}\\
+Experiments also indicate that there is no fixed threshold for the membrane potential, but rather a range in which
+a spike may or may not be produced depending on prior inputs.\\
+\vspace{1mm}\\
+The Exponential Leaky Integrate-and-Fire (ELIF) model incorporates an additional spike-generating term in the 
+LIF model to address these failings:
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L\left[E_L-V_m+\Delta_{th}\exp\left(\frac{V_m-V_{th}}{\Delta_{th}}\right)\right]+I_{\text{app}}
+\end{equation*}
+Where $V_{th}$ is the threshold as before, with $\Delta_{th}$ representing the voltage-range over which the
+spike-generating term becomes harder to overcome with inhibition.\\
+\vspace{1mm}\\
+This models an inward, depolarising current that arises when the membrane potential reaches the \textit{vicinity} 
+of the standard threshold that \textit{increases} as the membrane potential increases, creating 
+\textit{postive feedback} to generate a rapidly accelerating increase in membrane potential (which is the spike).
+In simulations of this we would set a \textit{maximum level} of the membrane potential $V_{max}$ at which the
+potential is reset as usual (rather than at threshold):
+\begin{equation*}
+\text{if }V_m>V_{max}\text{ then }V_m\mapsto V_{reset}
+\end{equation*}
+\newpage
+\noindent\textbf{Adaptive ELIF (AELIF)}\\
+The
 
 
 

@@ -8,4 +8,4 @@
 \contentsline {subsection}{\numberline {0.1.7}Euler-Mayamara method---LIF with noise}{12}{}%
 \contentsline {subsection}{\numberline {0.1.8}Models for the refractory period}{13}{}%
 \contentsline {subsection}{\numberline {0.1.9}Spike-Rate Adaptation}{16}{}%
-\contentsline {subsection}{\numberline {0.1.10}AELIF model}{17}{}%
+\contentsline {subsection}{\numberline {0.1.10}ELIF/AELIF model}{17}{}%
