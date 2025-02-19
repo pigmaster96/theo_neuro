@@ -15,8 +15,10 @@ class LIFneuronSRA(LIFneuron):
     def simulate(self,tmin=0,tmax=1000,dt=0.01,unstim_prop=0.2,
                  tau_th=3,deltath=20, #time constant for raised threshold decay and threshold increment
                  kNernst=-80,tau_g=0.2,deltaG=2000, #reset value, conductance timeconstant, increment
+                 deltaGsra=1,tau_g_sra=200,
                  noise=False):
-        '''dynamic threshold and refractory conductance with option for SRA'''
+        '''dynamic threshold and refractory conductance 
+        with option for SRA'''
         t=np.arange(tmin,tmax,dt) #init time vector
         V=np.zeros(len(t)) #init results vector
         Iappvec=np.zeros(len(t)) #init vector for applied current
@@ -33,20 +35,26 @@ class LIFneuronSRA(LIFneuron):
         V_thref[0]=self.V_th #set intiial raised threshold
         #conductance model parameters
         G_k=np.zeros(len(t)) #k conductance initially set to 0
-
+        #SRA 
+        G_sra=np.zeros(len(t)) #sra conductance initially set to 0
 
         for i in range(len(t)-1):
             #fwd euler threshold potential
             dVthdt=(self.V_th-V_thref[i])/tau_th
             V_thref[i+1]=V_thref[i]+dVthdt*dt
 
-            #fwd euler k conductance (decays to 0)
+            #fwd euler refractory K conductance (decays to 0)
             dG_kdt=-G_k[i]/tau_g
             G_k[i+1]=G_k[i]+dG_kdt*dt
 
+            #fwd euler SRA conductance (decays to 0)
+            dG_sradt=-G_sra[i]/tau_g_sra
+            G_sra[i+1]=G_sra[i]+dG_sradt*dt
+
             #fwd euler membrane potential with ref conductance term
             dvdt=(self.E_l-V[i])/tau+\
-                (Iappvec[i]+G_k[i]*(kNernst-V[i]))/self.C_m
+                (Iappvec[i]+G_k[i]*(kNernst-V[i])+
+                 G_sra[i]*(kNernst-V[i]))/self.C_m
             if noise:
                 V[i+1]=V[i]+dt*dvdt+self.sigma_i*random.gauss(0,1)*dt**0.5
             else:
@@ -57,17 +65,30 @@ class LIFneuronSRA(LIFneuron):
                 spikeind.append(i+1)
                 G_k[i+1]+=deltaG #increment G
                 V_thref[i+1]+=deltath #increment threshold
-        return t,V,Iappvec,spikeind,V_thref,G_k
+                G_sra[i+1]+=deltaGsra #increment sra
+
+        return t,V,Iappvec,spikeind,V_thref,G_k,G_sra
 
 
 
 
 
     
-test=LIFneuronSRA()
-test1_1,test1_2,test1_3,test1_4,test1_5,test1_6=test.simulate()
+test=LIFneuronSRA(I_app=300)
+test1_1,test1_2,test1_3,test1_4,test1_5,test1_6,test1_7=test.simulate()
 
 plt.figure()
+plt.subplot(4,1,1)
 plt.plot(test1_1,test1_2)
+
+plt.subplot(4,1,2)
+plt.plot(test1_1,test1_6)
+
+plt.subplot(4,1,3)
+plt.plot(test1_1,test1_7)
+
+plt.subplot(4,1,4)
+plt.plot(test1_1,test1_3)
+
 plt.show()
 
