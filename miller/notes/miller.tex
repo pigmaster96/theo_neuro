@@ -354,11 +354,23 @@ Many neurons respond to a pulse of constant current with a spike rate that decre
 \textbf{Implementation}\\
 Spike rate adaptation can be simulated in a LIF model by incrementing a potassium conductance following a spike, similar to an earlier described model of refractory conductance, that decays between spikes.\\
 \vspace{1mm}\\
-Although the changes in the LIF model necessary for incorporating spike-rate adaptationa re \textit{qualitatively} identical to that of incorporating refractory conductance, 
-the difference here is in the parameter values used for simulation; the incremental conductance following each spike is much smaller for spike-rate adaptation (we don't prevent spikes by making incrementing it large enough to clamp the membrane potential at a low value.)\\
+Although the changes in the LIF model necessary for incorporating spike-rate adaptation are \textit{qualitatively} identical to that of incorporating refractory conductance, 
+the difference here is in the parameter values used for simulation; \textit{the incremental conductance following each spike is much smaller for spike-rate adaptation} (we don't prevent spikes by making incrementing it large enough to clamp the membrane potential at a low value.)\\
 \vspace{1mm}\\
-Additionally the time scale for the delay of conductance should be much longer in for spike-rate adaptation (longer than the typical interval between spikes) so that the 
-conductance can \textit{accumulate over a spike train}.
+Additionally the \textit{time scale for the delay of conductance should be much longer in for spike-rate adaptation} (longer than the typical interval between spikes) so that the 
+conductance can \textit{accumulate over a spike train}. The full model looks like
+\begin{equation*}
+C_m\frac{dV_m}{dt}=G_L(E_L-V_m)+I_\text{app}+G_{\text{ref}}[E_k-V_m(t)]+G_{SRA}[E_k-V_m(t)]
+\end{equation*}
+where $G_{SRA}$ also decays to 0, just with a much larger time constant. 
+\begin{equation*}
+\frac{dG_{SRA}(t)}{dt}=-\frac{G_{SRA}(t)}{\tau_{SRA}}\quad\text{after spike }G_{SRA}\mapsto G_{SRA}+\Delta G
+\end{equation*}
+Illustrated:
+\begin{center}
+\includegraphics[width=10cm]{10}\\
+\end{center}
+From \texttt{LIFsra.py} (this model uses a refractory conductance and raised threshold).
 \newpage
 
 \subsection{ELIF/AELIF model}
@@ -389,6 +401,10 @@ potential is reset as usual (rather than at threshold):
 \newpage
 \noindent\textbf{Adaptive ELIF (AELIF)}\\
 The
+
+
+
+
 
 
 

@@ -77,18 +77,19 @@ class LIFneuronSRA(LIFneuron):
 test=LIFneuronSRA(I_app=300)
 test1_1,test1_2,test1_3,test1_4,test1_5,test1_6,test1_7=test.simulate()
 
-plt.figure()
-plt.subplot(4,1,1)
+plt.figure('SRA')
+plt.subplot(3,1,1)
 plt.plot(test1_1,test1_2)
+plt.ylabel("$V_m(mV)$")
 
-plt.subplot(4,1,2)
+plt.subplot(3,1,2)
 plt.plot(test1_1,test1_6)
+plt.ylabel("(refractory) K conductance(nS)")
 
-plt.subplot(4,1,3)
+plt.subplot(3,1,3)
 plt.plot(test1_1,test1_7)
-
-plt.subplot(4,1,4)
-plt.plot(test1_1,test1_3)
+plt.ylabel("(SRA) K conductance(nS)")
+plt.xlabel('Time(ms)')
 
 plt.show()
 
