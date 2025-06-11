@@ -73,7 +73,6 @@ class LIFneuronSRA(LIFneuron):
 
 
 
-    
 test=LIFneuronSRA(I_app=300)
 test1_1,test1_2,test1_3,test1_4,test1_5,test1_6,test1_7=test.simulate()
 
