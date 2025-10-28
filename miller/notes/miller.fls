@@ -351,6 +351,14 @@ INPUT ./images//10.png
 INPUT ./images//10.png
 INPUT ./images//10.png
 INPUT ./images//10.png
+INPUT ./images//11.png
+INPUT ./images//11.png
+INPUT ./images//11.png
+INPUT ./images//11.png
+INPUT ./images//12.png
+INPUT ./images//12.png
+INPUT ./images//12.png
+INPUT ./images//12.png
 INPUT miller.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

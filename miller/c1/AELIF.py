@@ -24,13 +24,17 @@ def AELIFneuron(E_l=-75e-3,V_th=-50e-3,V_r=-80e-3,delta_th=5e-3,C_m=100e-12,G_l=
     Iapp=np.zeros(timevec.shape)
     Iapp[int(Iapp_start/dt):int(timevec.shape[0]-Iapp_start/dt)]=Iappval
 
+    #record spike times
+    spikes=np.empty(0) 
+
     #simulate! (fwd euler)
     for t in range(timevec.shape[0]-1):
         #check if max reached
         if V_m[t]>=V_max:
-            #reset membrane voltage, set previous to V_max
+            #reset membrane voltage, set previous to V_max, record spike
             V_m[t-1]=V_max
             V_m[t]=V_r
+            spikes=np.append(spikes,t*dt)
             #increment spike rate adaptation
             I_sra[t]+=b
         #fwd euler
@@ -39,22 +43,22 @@ def AELIFneuron(E_l=-75e-3,V_th=-50e-3,V_r=-80e-3,delta_th=5e-3,C_m=100e-12,G_l=
         V_m[t+1]=V_m[t]+dv_dt*dt
         I_sra[t+1]=I_sra[t]+dI_sra_dt*dt
 
-    return timevec,V_m,Iapp,I_sra
+    return timevec,V_m,Iapp,I_sra,spikes
 
 
-timevec,V_m,Iapp,Isra=AELIFneuron()
-plt.figure()
-plt.subplot(3,1,1)
-plt.plot(timevec,V_m)
-
-plt.subplot(3,1,2)
-plt.plot(timevec,Iapp)
-
-plt.subplot(3,1,3)
-plt.plot(timevec,Isra)
-
-
-plt.show()
+#timevec,V_m,Iapp,Isra=AELIFneuron()
+#plt.figure()
+#plt.subplot(3,1,1)
+#plt.plot(timevec,V_m)
+#
+#plt.subplot(3,1,2)
+#plt.plot(timevec,Iapp)
+#
+#plt.subplot(3,1,3)
+#plt.plot(timevec,Isra)
+#
+#
+#plt.show()
 
 
 
