@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 from tqdm import trange
 import random
 
+#AELIF uses an exponential component rather than an added artificial spike. Reset at V_max, the exponential component allows it to reach that value very quickly after threshold.
+
 
 #AELIF Model
-
-def AELIFneuron(E_l=-75,V_th=-50,V_r=-80,delta_th=2,G_l=10,C_m=100,a=2,b=0.02,tau_sra=200,dt=0.001,tmax=1.5,Iappval=500,Iapp_start=0.5):
+def AELIFneuron(E_l=-75e-3,V_th=-50e-3,V_r=-80e-3,delta_th=5e-3,C_m=100e-12,G_l=10e-9,a=2e-9,b=0.02e-9,tau_sra=200e-3,dt=0.0001,tmax=.5,Iappval=400e-12,Iapp_start=0.05,V_max=50e-3):
 
     #init time vector
     timevec=np.linspace(0,tmax,int(tmax/dt))
@@ -24,10 +25,36 @@ def AELIFneuron(E_l=-75,V_th=-50,V_r=-80,delta_th=2,G_l=10,C_m=100,a=2,b=0.02,ta
     Iapp[int(Iapp_start/dt):int(timevec.shape[0]-Iapp_start/dt)]=Iappval
 
     #simulate! (fwd euler)
-    for t in range(timevec.shape[0]):
-        dv_dt=(G_l*(E_l-V_m[t]+delta_th*np.exp((V_m[t]-V_th)/delta_th))-I_sra[t]+Iappvec[t])/C_m
-        dI_sra_dt=
+    for t in range(timevec.shape[0]-1):
+        #check if max reached
+        if V_m[t]>=V_max:
+            #reset membrane voltage, set previous to V_max
+            V_m[t-1]=V_max
+            V_m[t]=V_r
+            #increment spike rate adaptation
+            I_sra[t]+=b
+        #fwd euler
+        dv_dt=(G_l*(E_l-V_m[t]+delta_th*np.exp((V_m[t]-V_th)/delta_th))-I_sra[t]+Iapp[t])/C_m
+        dI_sra_dt=(a*(V_m[t]-E_l)-I_sra[t])/tau_sra
+        V_m[t+1]=V_m[t]+dv_dt*dt
+        I_sra[t+1]=I_sra[t]+dI_sra_dt*dt
 
+    return timevec,V_m,Iapp,I_sra
+
+
+timevec,V_m,Iapp,Isra=AELIFneuron()
+plt.figure()
+plt.subplot(3,1,1)
+plt.plot(timevec,V_m)
+
+plt.subplot(3,1,2)
+plt.plot(timevec,Iapp)
+
+plt.subplot(3,1,3)
+plt.plot(timevec,Isra)
+
+
+plt.show()
 
 
 
@@ -38,7 +65,6 @@ def AELIFneuron(E_l=-75,V_th=-50,V_r=-80,delta_th=2,G_l=10,C_m=100,a=2,b=0.02,ta
 
 
 
-print(AELIFneuron())
 
 
 
