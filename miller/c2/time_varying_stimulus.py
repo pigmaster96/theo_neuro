@@ -22,13 +22,13 @@ for ind in range(len(Iapp)):
     Iapp_upsampled[ind*int(np.round(interval/dt)):(ind+1)*int(np.round(interval/dt))]=Iapp[ind]
 
 
-t,v,_,_,_=AELIFneuron(tmax=tmax,dt=dt,Iappvec=Iapp_upsampled)
-
-
-
-plt.figure()
-plt.plot(t,v)
-plt.show()
+#t,v,_,_,_=AELIFneuron(tmax=tmax,dt=dt,Iappvec=Iapp_upsampled)
+#
+#
+#
+#plt.figure()
+#plt.plot(t,v)
+#plt.show()
 
 
 
