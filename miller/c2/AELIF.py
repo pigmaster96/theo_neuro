@@ -7,7 +7,7 @@ import random
 
 
 #AELIF Model
-def AELIFneuron(E_l=-75e-3,V_th=-50e-3,V_r=-80e-3,delta_th=5e-3,C_m=100e-12,G_l=10e-9,a=2e-9,b=0.02e-9,tau_sra=200e-3,dt=0.0001,tmax=.5,Iappval=400e-12,Iapp_start=0.05,V_max=50e-3):
+def AELIFneuron(E_l=-60e-3,V_th=-50e-3,V_r=-80e-3,delta_th=2e-3,C_m=100e-12,G_l=8e-9,a=10e-9,b=0.5e-9,tau_sra=50e-3,dt=1e-5,tmax=1.5,Iappval=400e-12,Iapp_start=0.5,V_max=50e-3,Iappvec=[]):
 
     #init time vector
     timevec=np.linspace(0,tmax,int(tmax/dt))
@@ -21,14 +21,17 @@ def AELIFneuron(E_l=-75e-3,V_th=-50e-3,V_r=-80e-3,delta_th=5e-3,C_m=100e-12,G_l=
     I_sra[0]=0
 
     #applied current vector
-    Iapp=np.zeros(timevec.shape)
-    Iapp[int(Iapp_start/dt):int(timevec.shape[0]-Iapp_start/dt)]=Iappval
+    if len(Iappvec)==0:
+        Iapp=np.zeros(timevec.shape)
+        Iapp[int(Iapp_start/dt):int(timevec.shape[0]-Iapp_start/dt)]=Iappval
+    else:
+        Iapp=Iappvec
 
     #record spike times
     spikes=np.empty(0) 
 
     #simulate! (fwd euler)
-    for t in range(timevec.shape[0]-1):
+    for t in trange(timevec.shape[0]-1):
         #check if max reached
         if V_m[t]>=V_max:
             #reset membrane voltage, set previous to V_max, record spike
