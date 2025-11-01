@@ -27,8 +27,9 @@ def AELIFneuron(E_l=-60e-3,V_th=-50e-3,V_r=-80e-3,delta_th=2e-3,C_m=100e-12,G_l=
     else:
         Iapp=Iappvec
 
-    #record spike times
+    #record spike times and init spike bool vector
     spikes=np.empty(0) 
+    spikebool=np.zeros(timevec.shape)
 
     #simulate! (fwd euler)
     for t in trange(timevec.shape[0]-1):
@@ -38,15 +39,17 @@ def AELIFneuron(E_l=-60e-3,V_th=-50e-3,V_r=-80e-3,delta_th=2e-3,C_m=100e-12,G_l=
             V_m[t-1]=V_max
             V_m[t]=V_r
             spikes=np.append(spikes,t*dt)
+            spikebool[t]=1
             #increment spike rate adaptation
             I_sra[t]+=b
+
         #fwd euler
         dv_dt=(G_l*(E_l-V_m[t]+delta_th*np.exp((V_m[t]-V_th)/delta_th))-I_sra[t]+Iapp[t])/C_m
         dI_sra_dt=(a*(V_m[t]-E_l)-I_sra[t])/tau_sra
         V_m[t+1]=V_m[t]+dv_dt*dt
         I_sra[t+1]=I_sra[t]+dI_sra_dt*dt
 
-    return timevec,V_m,Iapp,I_sra,spikes
+    return timevec,V_m,Iapp,I_sra,spikes,spikebool
 
 
 #timevec,V_m,Iapp,Isra=AELIFneuron()
