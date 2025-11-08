@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from tqdm import trange
 
 from AELIF import AELIFneuron
+from upsample2d import upsample2d
+
 
 #init stimulus
 bins=40000
@@ -41,4 +43,5 @@ for ind in range(len(weighted_stim)):
 #simulate!
 _,_,_,_,spikes,spikebool=AELIFneuron(Iappvec=Iapp,dt=dt,tmax=tmax)
 
-
+#upsample stimulus array
+stimulus_new=upsample2d(vec=stimulus,dt_old=interval,dt_new=dt)
